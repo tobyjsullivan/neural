@@ -6,9 +6,9 @@ class NeuralApp {
         Neuron myNeuron = new Neuron(4);
 
         System.out.println("Starting training...");
-        for (int k = 0; k < 1000; k++) {
-            System.out.print(".");
-
+        int score;
+        int trainingIterations = 0;
+        do {
             for (boolean[] vector : trainingSet) {
                 double d = vector[vector.length - 1] ? 0.9 : 0.1;
                 double[] x = new double[vector.length - 1];
@@ -22,12 +22,30 @@ class NeuralApp {
                     myNeuron.retrain(i, x[i], d, y);
                 }
             }
-        }
-        System.out.println();
-        System.out.println("Training complete.");
-        System.out.println("Starting evaluation...");
+            trainingIterations++;
 
-        int score = 0;
+            score = 0;
+            for (boolean[] vector : trainingSet) {
+                boolean d = vector[vector.length - 1];
+                double[] x = new double[vector.length - 1];
+                for (int i = 0; i < x.length; i++) {
+                    x[i] = vector[i] ? 0.9 : 0.1;
+                }
+
+                double y = myNeuron.f(x);
+
+                if (y >= 0.5 == d) {
+                    score++;
+                }
+            }
+            System.out.println("Evaluation complete. Score: "+score+"/"+trainingSet.length);
+        } while (score < trainingSet.length);
+        System.out.println();
+        System.out.println("Training complete. Total iterations: "+trainingIterations);
+
+        System.out.println("Starting true evaluation...");
+
+        score = 0;
         for (boolean[] vector : evaluationSet) {
             boolean d = vector[vector.length - 1];
             double[] x = new double[vector.length - 1];
@@ -47,7 +65,6 @@ class NeuralApp {
                 System.out.println("Wrong.");
             }
         }
-
         System.out.println("Evaluation complete. Score: "+score+"/"+evaluationSet.length);
 
         System.out.println("Done!");

@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class Neuron {
     private int inputCount;
     private double[] w;
@@ -10,10 +8,8 @@ public class Neuron {
         this.inputCount = inputCount;
         this.w = new double[inputCount + 1];
 
-        Random rand = new Random();
-
         for(int i = 0; i < inputCount + 1; i++) {
-            this.w[i] = rand.nextDouble() / 2;
+            this.w[i] = 0.0;
         }
     }
 
@@ -27,7 +23,10 @@ public class Neuron {
             sum += w[i+1] * in[i];
         }
 
-        return sum;
+        // Sigmoid activation function
+        double y = Math.pow((1.0 + Math.pow(Math.E,0 - sum)), -1);
+
+        return y;
     }
 
     public void retrain(int i, double input, double expectedOut, double actualOut) {
