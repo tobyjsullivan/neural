@@ -1,3 +1,5 @@
+package net.tobysullivan.neural;
+
 public class Neuron {
     private int inputCount;
     private double[] w;
@@ -24,7 +26,7 @@ public class Neuron {
         }
 
         // Sigmoid activation function
-        double y = Math.pow((1.0 + Math.pow(Math.E,0 - sum)), -1);
+        double y = Math.pow((1.0 + Math.pow(Math.E, 0 - sum)), -1);
 
         return y;
     }

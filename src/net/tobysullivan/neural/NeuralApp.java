@@ -1,4 +1,6 @@
-class NeuralApp {
+package net.tobysullivan.neural;
+
+public class NeuralApp {
 
     public static void main(String[] args) {
         System.out.println("Starting app...");
